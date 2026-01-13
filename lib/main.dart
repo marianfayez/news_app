@@ -1,17 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_app/core/routes/auto_route.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
+  runApp( MyApp());
 
 
 }
 
 class MyApp extends StatelessWidget{
-  const MyApp({super.key});
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +20,11 @@ class MyApp extends StatelessWidget{
       designSize: const Size(393, 852),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder:(context,child)=> const MaterialApp(
-        debugShowCheckedModeBanner: false,
+        builder: (context, child)=> MaterialApp.router(
+          routerConfig: _appRouter.config(),
+          debugShowCheckedModeBanner: false,
+        ));
 
-      ),
-    );
   }
 
 }
