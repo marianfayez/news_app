@@ -97,12 +97,12 @@ class AppDrawer extends StatelessWidget {
             Text("Language", style: getBoldStyle(color: ColorManager.white)),
           ),
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding:  EdgeInsets.symmetric(horizontal: 16.h),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding:  EdgeInsets.symmetric(horizontal: 12.h),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 1),
-                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.white, width: 1.w),
+                  borderRadius: BorderRadius.circular(8.r),
                 ),
                 child: DropdownButton<String>(
                   value: selectedItem2,
