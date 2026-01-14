@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/core/resources/color_manager.dart';
 import 'package:news_app/core/resources/font_manager.dart';
 import 'package:news_app/core/resources/styles_manager.dart';
+import 'package:news_app/features/theme/presentation/bloc/theme_bloc.dart';
 
 class AppDrawer extends StatelessWidget {
   Function onTab;
 
   AppDrawer({required this.onTab, super.key});
 
-  String selectedItem = 'Dark';
+  String selectedTheme = 'Dark';
   String selectedItem2 = 'English';
 
   @override
@@ -66,7 +68,10 @@ class AppDrawer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: DropdownButton<String>(
-                  value: selectedItem,
+                  value: context.select((ThemeBloc bloc) =>
+                      bloc.state.themeMode == ThemeMode.dark
+                          ? 'Dark'
+                          : 'Light'),
                   isExpanded: true,
                   dropdownColor: Colors.black,
                   iconEnabledColor: Colors.white,
@@ -77,13 +82,21 @@ class AppDrawer extends StatelessWidget {
                     DropdownMenuItem(value: 'Light', child: Text('Light')),
                   ],
                   onChanged: (value) {
-                    // setState(() {
-                    selectedItem = value!;
-                    // });
+                    if (value == 'Dark') {
+                      context
+                          .read<ThemeBloc>()
+                          .add(ChangeThemeEvent(ThemeMode.dark));
+                    } else {
+                      context
+                          .read<ThemeBloc>()
+                          .add(ChangeThemeEvent(ThemeMode.light));
+                    }
                   },
                 ),
               )),
-          SizedBox(height: 24.h,),
+          SizedBox(
+            height: 24.h,
+          ),
           const Divider(
             indent: 25,
             endIndent: 25,
@@ -93,13 +106,13 @@ class AppDrawer extends StatelessWidget {
               Icons.language,
               color: Colors.white,
             ),
-            title:
-            Text("Language", style: getBoldStyle(color: ColorManager.white)),
+            title: Text("Language",
+                style: getBoldStyle(color: ColorManager.white)),
           ),
           Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 16.h),
+              padding: EdgeInsets.symmetric(horizontal: 16.h),
               child: Container(
-                padding:  EdgeInsets.symmetric(horizontal: 12.h),
+                padding: EdgeInsets.symmetric(horizontal: 12.h),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white, width: 1.w),
                   borderRadius: BorderRadius.circular(8.r),
