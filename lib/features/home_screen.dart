@@ -1,7 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:news_app/core/resources/color_manager.dart';
+import 'package:news_app/core/resources/styles_manager.dart';
 import 'package:news_app/core/widgets/app_drawer.dart';
+import 'package:news_app/core/widgets/category_section.dart';
+import 'package:news_app/core/widgets/sources_section.dart';
 
 
 @RoutePage()
@@ -17,11 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(selectedCategory??"Home",style: Theme.of(context).textTheme.titleMedium,),
+        title:  Text(selectedCategory??"Home"),
       ),
       drawer:AppDrawer(onTab: onDrawerTab,),
-      // body: selectedCategory == null ? CategorySection(onTab:onSelectedCategory,):
-      // SourcesSection(categoryId: selectedCategory!,onTap: onDrawerTab,),
+      body: selectedCategory == null ? CategorySection(onTab:onSelectedCategory,):
+      SourcesSection(categoryId: "2", onTap: onDrawerTab,),
     );
   }
 

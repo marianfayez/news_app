@@ -35,7 +35,6 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(),
             Assets.images.splashLogo.image(),
             // const Spacer(),
             // Assets.images.branding.image(),

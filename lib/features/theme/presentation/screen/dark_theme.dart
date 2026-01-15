@@ -3,9 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/theme_data.dart';
 import 'package:news_app/core/resources/color_manager.dart';
+import 'package:news_app/core/resources/styles_manager.dart';
 import 'package:news_app/features/theme/presentation/screen/my_theme.dart';
 
-class DarkTheme extends MyTheme{
+class DarkTheme extends MyTheme {
   @override
   Color get backgroundColor => ColorManager.black;
 
@@ -17,16 +18,26 @@ class DarkTheme extends MyTheme{
 
   @override
   ThemeData get themeData => ThemeData(
-    primaryColor: primaryColor,
-    secondaryHeaderColor: backgroundColor,
-    hintColor: backgroundColor,
-    // focusColor: Color(0xFF7B7B7B),
-    appBarTheme: AppBarTheme(
-        centerTitle: true,
-        backgroundColor: backgroundColor
-    ),
-    scaffoldBackgroundColor: backgroundColor,
+        primaryColor: primaryColor,
+        secondaryHeaderColor: backgroundColor,
+        hintColor: backgroundColor,
+        // focusColor: Color(0xFF7B7B7B),
+        appBarTheme: AppBarTheme(
+          centerTitle: true,
+          backgroundColor: backgroundColor,
+          titleTextStyle: getRegularStyle(
+            color: ColorManager.white,
+          ),
+          iconTheme: IconThemeData(
+            color: ColorManager.white,
+          ),
+        ),
+        scaffoldBackgroundColor: backgroundColor,
+        textTheme: TextTheme(
+          titleLarge: getMediumStyle(color: ColorManager.white),
+          titleSmall: getLightStyle(color: ColorManager.white),
+          headlineMedium: getSemiBoldStyle(color: ColorManager.white),
 
-  );
-
+        ),
+      );
 }
