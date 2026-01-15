@@ -37,12 +37,12 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             const Spacer(),
             Assets.images.splashLogo.image(),
-            const Spacer(),
-            Assets.images.branding.image(),
-            Text(
-              "Supervised by Mohamed Nabil",
-              style: getRegular(color: ColorManager.white),
-            )
+            // const Spacer(),
+            // Assets.images.branding.image(),
+            // Text(
+            //   "Supervised by Mohamed Nabil",
+            //   style: getRegular(color: ColorManager.white),
+            // )
           ],
         ),
       ),

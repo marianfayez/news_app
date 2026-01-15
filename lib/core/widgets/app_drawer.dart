@@ -94,47 +94,7 @@ class AppDrawer extends StatelessWidget {
                   },
                 ),
               )),
-          SizedBox(
-            height: 24.h,
-          ),
-          const Divider(
-            indent: 25,
-            endIndent: 25,
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.language,
-              color: Colors.white,
-            ),
-            title: Text("Language",
-                style: getBoldStyle(color: ColorManager.white)),
-          ),
-          Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.h),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.h),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 1.w),
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
-                child: DropdownButton<String>(
-                  value: selectedItem2,
-                  isExpanded: true,
-                  dropdownColor: Colors.black,
-                  iconEnabledColor: Colors.white,
-                  underline: const SizedBox(),
-                  style: getRegularStyle(color: Colors.white),
-                  items: const [
-                    DropdownMenuItem(value: 'English', child: Text('English')),
-                    DropdownMenuItem(value: 'Arabic', child: Text('Arabic')),
-                  ],
-                  onChanged: (value) {
-                    // setState(() {
-                    selectedItem2 = value!;
-                    // });
-                  },
-                ),
-              ))
+          
         ],
       ),
     );
