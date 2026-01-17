@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:news_app/core/resources/color_manager.dart';
-import 'package:news_app/core/resources/styles_manager.dart';
 import 'package:news_app/features/theme/presentation/bloc/theme_bloc.dart';
 
 class CategorySection extends StatelessWidget {
@@ -39,7 +37,6 @@ class CategorySection extends StatelessWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         List<String> currentList = _getCurrentList(state.themeMode);
-
         return Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
@@ -65,7 +62,8 @@ class CategorySection extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               onTab(currentList[index]
-                                  .substring(0, currentList[index].length - 6));
+                                  .replaceAll('_light', '')
+                                  .replaceAll('_dark', ''),);
                             },
                             child: Container(
                                 margin: EdgeInsets.symmetric(

@@ -34,11 +34,9 @@ class SourcesSection extends StatelessWidget {
           else {
             var list = state.sourcesModel?.sources ?? [];
             print('🔥 list length = ${list.length}');
-            return Expanded(
-              child: ListView.builder(itemBuilder: (context,index){
-                return Text(list[index].name??"",style: getSmallStyle(color: ColorManager.white),);
-              },itemCount: list.length,),
-            );
+            return ListView.builder(itemBuilder: (context,index){
+              return Text(list[index].name??"",style: getSmallStyle(color: ColorManager.white),);
+            },itemCount: list.length,);
             // return Column(
             //     children: [
             //       DefaultTabController(

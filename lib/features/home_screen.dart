@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer:AppDrawer(onTab: onDrawerTab,),
       body: selectedCategory == null ? CategorySection(onTab:onSelectedCategory,):
-      SourcesSection(categoryId: "2", onTap: onDrawerTab,),
+      SourcesSection(categoryId: selectedCategory!, onTap: onDrawerTab,),
     );
   }
 
