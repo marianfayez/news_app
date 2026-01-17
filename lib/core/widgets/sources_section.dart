@@ -27,16 +27,56 @@ class SourcesSection extends StatelessWidget {
 
         },
         builder: (context, state) {
-          print('🔥 Builder fired: state = $state');
           if (state.getSourcesState == SourceRequestState.loading) {
             return const Center(child: CircularProgressIndicator());
           }
           else {
             var list = state.sourcesModel?.sources ?? [];
-            print('🔥 list length = ${list.length}');
-            return ListView.builder(itemBuilder: (context,index){
-              return Text(list[index].name??"",style: getSmallStyle(color: ColorManager.white),);
-            },itemCount: list.length,);
+            if (list.isEmpty) {
+              return const Center(child: Text('No sources found'));
+            }
+            return DefaultTabController(
+                initialIndex: state.selectedIndex,
+                length: list.length,
+              child: Column(
+                  children: [
+                    
+                         TabBar(
+                            onTap: (value) {
+                              context.read<SourceScreenBloc>().add(ChangeSourceIndexEvent(value));
+                            },
+                            isScrollable: true,
+                            dividerColor: Colors.transparent,
+                            indicatorColor: Theme
+                                .of(context)
+                                .secondaryHeaderColor,
+                            labelColor: Theme
+                                .of(context)
+                                .secondaryHeaderColor,
+                            tabs: list
+                                .map((element) => Tab(text: element.name))
+                                .toList()), Expanded(
+                      child: TabBarView(
+                        children: list.map((source) {
+                          return Center(
+                            child: Text(
+                              source.name ?? '',style: Theme.of(context).textTheme.titleMedium,
+
+                            ),
+                          );
+                        }).toList(),
+                      ),),
+                    // Expanded(
+                    //     child: ListView.builder(
+                    //       itemBuilder: (context, index) {
+                    //         return NewsItem(
+                    //           articles: HomeCubit.get(context).newsModel!.articles![index],
+                    //         );
+                    //       },
+                    //       itemCount: HomeCubit.get(context).newsModel?.articles?.length??0,
+                    //     ))
+                        ]),
+            );
             // return Column(
             //     children: [
             //       DefaultTabController(
@@ -56,18 +96,7 @@ class SourcesSection extends StatelessWidget {
             //               tabs: list
             //                   .map((element) => Tab(text: element.name))
             //                   .toList()),
-            //       ),Expanded(
-            //           child:TabBarView(
-            //             children: list.map((source) {
-            //               return Center(
-            //                 child: Text(
-            //                   source.name ?? '',
-            //                   style: Theme.of(context).textTheme.bodyLarge,
-            //                 ),
-            //               );
-            //             }).toList(),
-            //           ),
-            //       )
+            //       ),
             //     ]);
           }
         },
