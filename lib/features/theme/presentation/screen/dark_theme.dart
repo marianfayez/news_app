@@ -14,13 +14,14 @@ class DarkTheme extends MyTheme {
   Color get primaryColor => ColorManager.black;
 
   @override
-  Color get textColor => ColorManager.white;
+  Color get secondaryColor => ColorManager.white;
 
   @override
   ThemeData get themeData => ThemeData(
         primaryColor: primaryColor,
-        secondaryHeaderColor: backgroundColor,
+        secondaryHeaderColor: secondaryColor,
         hintColor: backgroundColor,
+
         // focusColor: Color(0xFF7B7B7B),
         appBarTheme: AppBarTheme(
           centerTitle: true,
@@ -37,6 +38,7 @@ class DarkTheme extends MyTheme {
           titleLarge: getMediumStyle(color: ColorManager.white),
           titleSmall: getLightStyle(color: ColorManager.white),
           headlineMedium: getSemiBoldStyle(color: ColorManager.white),
+          titleMedium: getRegularStyle(color: ColorManager.white),
 
         ),
       );

@@ -71,10 +71,9 @@ class CategorySection extends StatelessWidget {
                                 margin: EdgeInsets.symmetric(
                                     vertical: 16.w, horizontal: 16.h),
                                 decoration: BoxDecoration(
-                                    color: Theme.of(context).brightness ==
-                                            Brightness.light
-                                        ? ColorManager.white.withOpacity(0.5)
-                                        : ColorManager.black.withOpacity(0.5),
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.5),
                                     borderRadius: BorderRadius.circular(30.r)),
                                 child: Row(
                                     mainAxisSize: MainAxisSize.min,
@@ -82,44 +81,58 @@ class CategorySection extends StatelessWidget {
                                         ? [
                                             Container(
                                                 padding:
-                                                    const EdgeInsets.all(12),
+                                                     EdgeInsets.all(14.r),
                                                 decoration: BoxDecoration(
-                                                    color: Colors.white,
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             40.r)),
-                                                child: const Icon(
-                                                    Icons.arrow_back_ios)),
-                                            Container(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 16.h),
+                                                child: Padding(
+                                                  padding:  EdgeInsets.only(left: 6.w),
+                                                  child: Icon(
+                                                    Icons.arrow_back_ios,
+                                                    color: Theme.of(context)
+                                                        .secondaryHeaderColor,
+                                                  ),
+                                                )),
+                                            Padding(
+                                              padding:  EdgeInsets.only(left: 14.w,right: 22.w,top: 12.h,bottom: 12.h),
                                               child: Text(
                                                 "View All",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium,
                                               ),
                                             ),
                                           ]
                                         : [
-                                            Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 16),
+                                            Padding(
+                                              padding:  EdgeInsets.only(right:14.w,left: 22.w,top: 12.h,bottom: 12.h),
                                               child: Text(
                                                 "View All",
-                                                style: getMediumStyle(
-                                                    color:
-                                                        ColorManager.secondary),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleMedium,
                                               ),
                                             ),
                                             Container(
                                                 padding:
-                                                    const EdgeInsets.all(12),
+                                                EdgeInsets.all(14.r),
                                                 decoration: BoxDecoration(
-                                                    color: Colors.white,
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             40.r)),
-                                                child: const Icon(
-                                                    Icons.arrow_forward_ios))
+                                                child: Padding(
+                                                  padding:  EdgeInsets.only(left: 4.w),
+                                                  child: Icon(
+                                                    Icons.arrow_forward_ios,
+                                                    color: Theme.of(context)
+                                                        .secondaryHeaderColor,
+                                                  ),
+                                                ))
                                           ])),
                           ),
                         ],

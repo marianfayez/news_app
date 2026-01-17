@@ -6,7 +6,7 @@ abstract class MyTheme {
 
   Color get primaryColor;
   Color get backgroundColor;
-  Color get textColor;
+  Color get secondaryColor;
   ThemeData get themeData;
 
 }

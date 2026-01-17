@@ -14,12 +14,12 @@ class LightTheme extends MyTheme {
   Color get primaryColor => ColorManager.white;
 
   @override
-  Color get textColor => ColorManager.black;
+  Color get secondaryColor => ColorManager.black;
 
   @override
   ThemeData get themeData => ThemeData(
         primaryColor: primaryColor,
-        secondaryHeaderColor: backgroundColor,
+        secondaryHeaderColor: secondaryColor,
         hintColor: backgroundColor,
         // focusColor: Color(0xFF7B7B7B),
         appBarTheme: AppBarTheme(
@@ -36,6 +36,8 @@ class LightTheme extends MyTheme {
         textTheme: TextTheme(
           titleLarge: getMediumStyle(color: ColorManager.black),
           titleSmall: getLightStyle(color: ColorManager.black),
-          headlineMedium: getSemiBoldStyle(color: ColorManager.black),        ),
+          headlineMedium: getSemiBoldStyle(color: ColorManager.black),
+          titleMedium: getRegularStyle(color: ColorManager.black),
+        ),
       );
 }
