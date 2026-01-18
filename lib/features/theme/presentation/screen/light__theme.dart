@@ -34,10 +34,10 @@ class LightTheme extends MyTheme {
         ),
         scaffoldBackgroundColor: backgroundColor,
         textTheme: TextTheme(
-          titleLarge: getMediumStyle(color: ColorManager.black),
-          titleSmall: getLightStyle(color: ColorManager.black),
-          headlineMedium: getSemiBoldStyle(color: ColorManager.black),
-          titleMedium: getRegularStyle(color: ColorManager.black),
-        ),
+            titleLarge: getMediumStyle(color: ColorManager.black),
+            titleSmall: getLightStyle(color: ColorManager.black),
+            headlineMedium: getSemiBoldStyle(color: ColorManager.black),
+            titleMedium: getRegularStyle(color: ColorManager.black),
+            headlineSmall: getSmallStyle(color: const Color(0xFFA0A0A0))),
       );
 }

@@ -39,6 +39,7 @@ class DarkTheme extends MyTheme {
           titleSmall: getLightStyle(color: ColorManager.white),
           headlineMedium: getSemiBoldStyle(color: ColorManager.white),
           titleMedium: getRegularStyle(color: ColorManager.white),
+          headlineSmall: getSmallStyle(color: const Color(0xFFA0A0A0)),
 
         ),
       );
