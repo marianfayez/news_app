@@ -10,6 +10,7 @@ import 'package:news_app/features/sources/presentation/bloc/source_screen_event.
 
 class SourcesContent extends StatelessWidget {
   final Function onTap;
+
   const SourcesContent({super.key, required this.onTap});
 
   @override
@@ -20,25 +21,26 @@ class SourcesContent extends StatelessWidget {
           showDialog(
               context: context,
               builder: (context) => AlertDialog(
-                title: const Text("Error"),
-                content: Text(state.sourceFailures?.message ?? "Something went wrong"),
-                actions: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context, rootNavigator: true).pop();
-                        onTap();
-                      },
-                      child: const Text("ok"))
-                ],
-              ));
+                    title: const Text("Error"),
+                    content: Text(state.sourceFailures?.message ??
+                        "Something went wrong"),
+                    actions: [
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                            onTap();
+                          },
+                          child: const Text("ok"))
+                    ],
+                  ));
         }
 
         if (state.getSourcesState == SourceRequestState.success) {
           final sources = state.sourcesModel?.sources ?? [];
           if (sources.isNotEmpty) {
             context.read<NewsScreenBloc>().add(
-              GetNewsEvent(sourceId: sources[state.selectedIndex].id!),
-            );
+                  GetNewsEvent(sourceId: sources[state.selectedIndex].id!),
+                );
           }
         }
       },
@@ -52,9 +54,9 @@ class SourcesContent extends StatelessWidget {
         if (sources.isEmpty) {
           return Center(
               child: Text(
-                'No sources found',
-                style: Theme.of(context).textTheme.titleMedium,
-              ));
+            'No sources found',
+            style: Theme.of(context).textTheme.titleMedium,
+          ));
         }
 
         return Column(
@@ -64,12 +66,14 @@ class SourcesContent extends StatelessWidget {
               length: sources.length,
               child: TabBar(
                 onTap: (index) {
-                  context.read<SourceScreenBloc>().add(ChangeSourceIndexEvent(index));
+                  context
+                      .read<SourceScreenBloc>()
+                      .add(ChangeSourceIndexEvent(index));
                 },
                 isScrollable: true,
                 dividerColor: Colors.transparent,
                 unselectedLabelColor:
-                Theme.of(context).secondaryHeaderColor.withOpacity(0.5),
+                    Theme.of(context).secondaryHeaderColor.withOpacity(0.5),
                 labelPadding: EdgeInsets.symmetric(horizontal: 12.w),
                 indicatorColor: Theme.of(context).secondaryHeaderColor,
                 labelColor: Theme.of(context).secondaryHeaderColor,
@@ -87,14 +91,15 @@ class SourcesContent extends StatelessWidget {
                   if (articles.isEmpty) {
                     return Center(
                         child: Text(
-                          "No news found",
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ));
+                      "No news found",
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ));
                   }
 
                   return ListView.builder(
                     itemCount: articles.length,
-                    itemBuilder: (context, index) => NewsItem(articles: articles[index]),
+                    itemBuilder: (context, index) =>
+                        NewsItem(articles: articles[index]),
                   );
                 },
               ),

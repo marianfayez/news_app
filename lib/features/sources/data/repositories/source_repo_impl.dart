@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-
 import 'package:injectable/injectable.dart';
 import 'package:news_app/core/failuers/failuers.dart';
 import 'package:news_app/core/failuers/remote_failuers.dart';
@@ -16,21 +15,16 @@ class SourceRepoImpl implements SourceRepo {
   @override
   Future<Either<RouteFailures, SourcesModel>> getSources(
       {String? catId, required bool useRemote}) async {
-    print('getSources called with catId=$catId, useRemote=$useRemote');
-
     try {
       if (useRemote) {
-        print('No internet, returning empty');
         throw Exception('No internet, local repo not implemented');
-
       }
-        var result =
-            await sourceRemoteDs.getSources(catId: catId, useRemote: useRemote);
-        if (result.status == 'ok') {
-          return Right(result);
-        } else {
-          return Left(RemoteFailures(result.message ?? 'Error'));
-
+      var result =
+          await sourceRemoteDs.getSources(catId: catId, useRemote: useRemote);
+      if (result.status == 'ok') {
+        return Right(result);
+      } else {
+        return Left(RemoteFailures(result.message ?? 'Error'));
       }
     } catch (e) {
       return Left(RemoteFailures(e is Exception ? e.toString() : 'Error'));

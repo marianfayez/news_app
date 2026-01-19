@@ -10,7 +10,9 @@ class SourcesUseCase {
 
   SourcesUseCase(this.sourceRepo);
 
-  Future<Either<RouteFailures, SourcesModel>> call({String? catId,    required bool useRemote,
+  Future<Either<RouteFailures, SourcesModel>> call({
+    String? catId,
+    required bool useRemote,
   }) =>
       sourceRepo.getSources(catId: catId, useRemote: useRemote);
 }

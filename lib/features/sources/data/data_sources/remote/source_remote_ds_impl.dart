@@ -6,30 +6,27 @@ import 'package:news_app/features/sources/data/data_sources/remote/source_remote
 import 'package:news_app/features/sources/data/model/sources_model.dart';
 
 @Injectable(as: SourceRemoteDs)
-class SourceRemoteDsImpl implements SourceRemoteDs{
-
+class SourceRemoteDsImpl implements SourceRemoteDs {
   ApiManager apiManager;
+
   SourceRemoteDsImpl(this.apiManager);
 
   @override
-  Future<SourcesModel> getSources({String? catId,required bool useRemote}) async{
-
+  Future<SourcesModel> getSources(
+      {String? catId, required bool useRemote}) async {
     try {
-      final response = await apiManager.getData(endPoint: EndPoints.getSources,
-          queryParameters:  {"apiKey": "3512e29a752f4dd6bc7339fa9094bc3c","category":catId});
-      print('Raw API Response: ${response.data}');
-
+      final response = await apiManager.getData(
+          endPoint: EndPoints.getSources,
+          queryParameters: {
+            "apiKey": "3512e29a752f4dd6bc7339fa9094bc3c",
+            "category": catId
+          });
       return SourcesModel.fromJson(response.data);
     } on DioException catch (e) {
       final message =
-          e.response?.data?['message'] ??
-              e.message ??
-              'Something went wrong';
+          e.response?.data?['message'] ?? e.message ?? 'Something went wrong';
 
       throw Exception(message);
     }
-
   }
-
-
 }
