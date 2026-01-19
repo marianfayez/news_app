@@ -8,12 +8,10 @@ import 'package:news_app/features/theme/presentation/bloc/theme_bloc.dart';
 import 'package:news_app/features/theme/presentation/screen/dark_theme.dart';
 import 'package:news_app/features/theme/presentation/screen/light__theme.dart';
 import 'package:news_app/features/theme/presentation/screen/my_theme.dart';
-import 'package:news_app/internet_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  InternetService().init();
 
   runApp(
     MultiBlocProvider(
