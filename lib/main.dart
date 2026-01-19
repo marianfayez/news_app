@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,10 +8,12 @@ import 'package:news_app/features/theme/presentation/bloc/theme_bloc.dart';
 import 'package:news_app/features/theme/presentation/screen/dark_theme.dart';
 import 'package:news_app/features/theme/presentation/screen/light__theme.dart';
 import 'package:news_app/features/theme/presentation/screen/my_theme.dart';
+import 'package:news_app/internet_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
+  InternetService().init();
 
   runApp(
     MultiBlocProvider(

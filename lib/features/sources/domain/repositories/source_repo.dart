@@ -5,6 +5,6 @@ import 'package:news_app/features/sources/data/model/sources_model.dart';
 
 abstract class SourceRepo{
 
-  Future<Either<RouteFailures,SourcesModel>>getSources({String? catId});
+  Future<Either<RouteFailures,SourcesModel>>getSources({String? catId,required bool useRemote});
 
 }

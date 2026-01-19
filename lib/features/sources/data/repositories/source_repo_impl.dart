@@ -13,19 +13,27 @@ class SourceRepoImpl implements SourceRepo {
 
   SourceRepoImpl(this.sourceRemoteDs);
 
-
   @override
   Future<Either<RouteFailures, SourcesModel>> getSources(
-      {String? catId}) async {
+      {String? catId, required bool useRemote}) async {
+    print('getSources called with catId=$catId, useRemote=$useRemote');
+
     try {
-      var result = await sourceRemoteDs.getSources(catId: catId);
-      if (result.status == 'ok') {
-        return Right(result);
-      } else {
-        return Left(RemoteFailures(result.message ?? 'Error'));
-      }    } catch (e) {
-      return Left(
-          RemoteFailures(e is Exception ? e.toString() : 'Error'));
+      if (useRemote) {
+        print('No internet, returning empty');
+        throw Exception('No internet, local repo not implemented');
+
+      }
+        var result =
+            await sourceRemoteDs.getSources(catId: catId, useRemote: useRemote);
+        if (result.status == 'ok') {
+          return Right(result);
+        } else {
+          return Left(RemoteFailures(result.message ?? 'Error'));
+
+      }
+    } catch (e) {
+      return Left(RemoteFailures(e is Exception ? e.toString() : 'Error'));
     }
   }
 }

@@ -12,11 +12,12 @@ class SourceRemoteDsImpl implements SourceRemoteDs{
   SourceRemoteDsImpl(this.apiManager);
 
   @override
-  Future<SourcesModel> getSources({String? catId}) async{
+  Future<SourcesModel> getSources({String? catId,required bool useRemote}) async{
 
     try {
       final response = await apiManager.getData(endPoint: EndPoints.getSources,
           queryParameters:  {"apiKey": "3512e29a752f4dd6bc7339fa9094bc3c","category":catId});
+      print('Raw API Response: ${response.data}');
 
       return SourcesModel.fromJson(response.data);
     } on DioException catch (e) {

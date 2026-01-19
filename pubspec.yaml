@@ -27,7 +27,6 @@ dependencies:
   connectivity_plus: ^6.1.3
   hive_flutter: ^1.1.0
   hive: ^2.2.3
-  easy_localization: ^3.0.7
   auto_route: ^9.0.0
 
 dev_dependencies:

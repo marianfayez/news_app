@@ -23,7 +23,7 @@ class SourceScreenBloc extends Bloc<SourceScreenEvent, SourceScreenState> {
 
       emit(state.copyWith(getSourcesState: SourceRequestState.loading));
 
-      var result = await getSourceUseCase(catId: event.catId);
+      var result = await getSourceUseCase(catId: event.catId,useRemote: event.useRemote);
 
       result.fold((l) {
         emit(state.copyWith(
@@ -33,7 +33,6 @@ class SourceScreenBloc extends Bloc<SourceScreenEvent, SourceScreenState> {
           getSourcesState: SourceRequestState.success,
           sourcesModel: r,
         ));
-        add(GetNewsEvent(sourceId:  r.sources?.first.id ?? '') as SourceScreenEvent);
       });
     });
 

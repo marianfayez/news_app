@@ -12,6 +12,18 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
 import 'core/api/api_manager.dart' as _i237;
+import 'features/internet_service/data/data_sources/remote/Connectivity_remote_ds.dart'
+    as _i557;
+import 'features/internet_service/data/data_sources/remote/Connectivity_remote_ds_impl.dart'
+    as _i869;
+import 'features/internet_service/data/repositories/Connectivity_repo_impl.dart'
+    as _i196;
+import 'features/internet_service/domain/repositories/Connectivity_repo.dart'
+    as _i664;
+import 'features/internet_service/domain/use_cases/internet_use_case.dart'
+    as _i478;
+import 'features/internet_service/presentation/bloc/connectivity_bloc.dart'
+    as _i15;
 import 'features/news/data/data_sources/remote/news_remote_ds.dart' as _i726;
 import 'features/news/data/data_sources/remote/news_remote_ds_impl.dart'
     as _i617;
@@ -40,6 +52,8 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.lazySingleton<_i237.ApiManager>(() => _i237.ApiManager());
+    gh.lazySingleton<_i557.ConnectivityRemoteDs>(
+        () => _i869.ConnectivityRemoteDsImpl());
     gh.factory<_i457.SourceRemoteDs>(
         () => _i730.SourceRemoteDsImpl(gh<_i237.ApiManager>()));
     gh.factory<_i726.NewsRemoteDs>(
@@ -48,14 +62,20 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i797.SourceRepoImpl(gh<_i457.SourceRemoteDs>()));
     gh.factory<_i648.NewsRepo>(
         () => _i834.NewsRepoImpl(gh<_i726.NewsRemoteDs>()));
+    gh.factory<_i664.ConnectivityRepository>(
+        () => _i196.ConnectivityRepoImpl(gh<_i557.ConnectivityRemoteDs>()));
     gh.factory<_i395.SourcesUseCase>(
         () => _i395.SourcesUseCase(gh<_i345.SourceRepo>()));
+    gh.factory<_i478.ConnectivityUseCase>(
+        () => _i478.ConnectivityUseCase(gh<_i664.ConnectivityRepository>()));
     gh.factory<_i897.SourceScreenBloc>(
         () => _i897.SourceScreenBloc(gh<_i395.SourcesUseCase>()));
     gh.factory<_i1055.NewsUseCase>(
         () => _i1055.NewsUseCase(gh<_i648.NewsRepo>()));
     gh.factory<_i19.NewsScreenBloc>(
         () => _i19.NewsScreenBloc(gh<_i1055.NewsUseCase>()));
+    gh.factory<_i15.ConnectivityBloc>(
+        () => _i15.ConnectivityBloc(gh<_i478.ConnectivityUseCase>()));
     return this;
   }
 }
