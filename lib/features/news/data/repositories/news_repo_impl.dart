@@ -16,8 +16,11 @@ class NewsRepoImpl implements NewsRepo {
   Future<Either<RouteFailures, NewsModel>> getNews({String? sourceId}) async {
     try {
       var result = await newsRemoteDs.getNews(sourceId: sourceId);
-      return Right(result);
-    } catch (e) {
+      if (result.status == 'ok') {
+        return Right(result);
+      } else {
+        return Left(RemoteFailures(result.message ?? 'Error'));
+      }    } catch (e) {
       return Left(RemoteFailures(e.toString()));
     }
   }

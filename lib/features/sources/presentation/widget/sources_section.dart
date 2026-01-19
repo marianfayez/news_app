@@ -29,102 +29,132 @@ class SourcesSection extends StatelessWidget {
           create: (context) => getIt<NewsScreenBloc>(),
         ),
       ],
-      child: BlocConsumer<SourceScreenBloc, SourceScreenState>(
-        listener: (context, state) {
-          if (state.getSourcesState == SourceRequestState.success) {
-            final sources = state.sourcesModel?.sources ?? [];
-
-            if (sources.isNotEmpty) {
-              context.read<NewsScreenBloc>().add(
-                    GetNewsEvent(sourceId: sources[state.selectedIndex].id!),
-                  );
-            }
-          }
-          if (state.getSourcesState == SourceRequestState.error) {
-            showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                      title: const Text("Error"),
-                      content: const Text(
-                        "SomeThing went wrong",
-                        style: TextStyle(color: Colors.black),
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<NewsScreenBloc, NewsScreenState>(
+            listenWhen: (previous, current) =>
+                previous.getNewsState != current.getNewsState,
+            listener: (context, state) {
+              if (state.getNewsState == NewsRequestState.error) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text("Error"),
+                    content: Text(
+                      state.newsFailures?.message ?? "Something went wrong",
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                    actions: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Home"),
                       ),
-                      actions: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text("ok"))
-                      ],
-                    ));
-          }
-        },
-        builder: (context, state) {
-          if (state.getSourcesState == SourceRequestState.loading) {
-            return const Center(child: CircularProgressIndicator());
-          } else {
-            var list = state.sourcesModel?.sources ?? [];
-            if (list.isEmpty) {
-              return Center(
-                  child: Text(
-                'No sources found',
-                style: Theme.of(context).textTheme.titleMedium,
-              ));
-            }
-            return Column(children: [
-              DefaultTabController(
-                initialIndex: state.selectedIndex,
-                length: list.length,
-                child: TabBar(
-                    onTap: (value) {
-                      context
-                          .read<SourceScreenBloc>()
-                          .add(ChangeSourceIndexEvent(value));
-                      context
-                          .read<NewsScreenBloc>()
-                          .add(GetNewsEvent(sourceId: list[value].id!));
-                    },
-                    isScrollable: true,
-                    dividerColor: Colors.transparent,
-                    unselectedLabelColor:
-                        Theme.of(context).secondaryHeaderColor,
-                    labelPadding: EdgeInsets.symmetric(horizontal: 12.w),
-                    indicatorColor: Theme.of(context).secondaryHeaderColor,
-                    labelColor: Theme.of(context).secondaryHeaderColor,
-                    tabs: list
-                        .map((element) => Tab(text: element.name))
-                        .toList()),
-              ),
-              Expanded(
-                child: BlocBuilder<NewsScreenBloc, NewsScreenState>(
-                  builder: (context, state) {
-                    if (state.getNewsState == NewsRequestState.loading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-
-                    var articles = state.newsModel?.articles ?? [];
-
-                    if (articles.isEmpty) {
-                      return Center(
-                          child: Text(
-                        "No news found",
-                        style: Theme.of(context).textTheme.titleSmall,
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        ],
+        child: BlocConsumer<SourceScreenBloc, SourceScreenState>(
+          listener: (context, state) {
+            if (state.getSourcesState == SourceRequestState.error) {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                        title: const Text("Error"),
+                        content: Text(
+                          state.sourceFailures?.message ??
+                              "Something went wrong",
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                onTap();
+                              },
+                              child: const Text("ok"))
+                        ],
                       ));
-                    }
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                        return NewsItem(
-                          articles: articles[index],
-                        );
-                      },
-                      itemCount: articles.length,
+            }
+
+            if (state.getSourcesState == SourceRequestState.success) {
+              final sources = state.sourcesModel?.sources ?? [];
+
+              if (sources.isNotEmpty) {
+                context.read<NewsScreenBloc>().add(
+                      GetNewsEvent(sourceId: sources[state.selectedIndex].id!),
                     );
-                  },
+              }
+            }
+          },
+          builder: (context, state) {
+            if (state.getSourcesState == SourceRequestState.loading) {
+              return const Center(child: CircularProgressIndicator());
+            } else {
+              var list = state.sourcesModel?.sources ?? [];
+              if (list.isEmpty) {
+                return Center(
+                    child: Text(
+                  'No sources found',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ));
+              }
+              return Column(children: [
+                DefaultTabController(
+                  initialIndex: state.selectedIndex,
+                  length: list.length,
+                  child: TabBar(
+                      onTap: (value) {
+                        context
+                            .read<SourceScreenBloc>()
+                            .add(ChangeSourceIndexEvent(value));
+                      },
+                      isScrollable: true,
+                      dividerColor: Colors.transparent,
+                      unselectedLabelColor:
+                          Theme.of(context).secondaryHeaderColor,
+                      labelPadding: EdgeInsets.symmetric(horizontal: 12.w),
+                      indicatorColor: Theme.of(context).secondaryHeaderColor,
+                      labelColor: Theme.of(context).secondaryHeaderColor,
+                      tabs: list
+                          .map((element) => Tab(text: element.name))
+                          .toList()),
                 ),
-              ),
-            ]);
-          }
-        },
+                Expanded(
+                  child: BlocBuilder<NewsScreenBloc, NewsScreenState>(
+                    builder: (context, state) {
+                      if (state.getNewsState == NewsRequestState.loading) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
+                      var articles = state.newsModel?.articles ?? [];
+
+                      if (articles.isEmpty) {
+                        return Center(
+                            child: Text(
+                          "No news found",
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ));
+                      }
+                      return ListView.builder(
+                        itemBuilder: (context, index) {
+                          return NewsItem(
+                            articles: articles[index],
+                          );
+                        },
+                        itemCount: articles.length,
+                      );
+                    },
+                  ),
+                ),
+              ]);
+            }
+          },
+        ),
       ),
     );
   }

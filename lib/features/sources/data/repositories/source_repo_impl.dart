@@ -19,8 +19,11 @@ class SourceRepoImpl implements SourceRepo {
       {String? catId}) async {
     try {
       var result = await sourceRemoteDs.getSources(catId: catId);
-      return Right(result);
-    } catch (e) {
+      if (result.status == 'ok') {
+        return Right(result);
+      } else {
+        return Left(RemoteFailures(result.message ?? 'Error'));
+      }    } catch (e) {
       return Left(RemoteFailures(e.toString()));
     }
   }

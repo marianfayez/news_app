@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_app/core/failuers/failuers.dart';
+import 'package:news_app/features/news/presentation/bloc/news_event.dart';
 import 'package:news_app/features/sources/data/model/sources_model.dart';
 import 'package:news_app/features/sources/domain/use_cases/sources_use_case.dart';
 import 'package:news_app/features/sources/presentation/bloc/source_screen_event.dart';
@@ -26,7 +27,6 @@ class SourceScreenBloc extends Bloc<SourceScreenEvent, SourceScreenState> {
       var result = await getSourceUseCase(catId: event.catId);
 
       result.fold((l) {
-        print(l.message);
         emit(state.copyWith(
             getSourcesState: SourceRequestState.error, sourceFailures: l));
       }, (r) {
@@ -34,6 +34,7 @@ class SourceScreenBloc extends Bloc<SourceScreenEvent, SourceScreenState> {
           getSourcesState: SourceRequestState.success,
           sourcesModel: r,
         ));
+        add(GetNewsEvent(sourceId:  r.sources?.first.id ?? '') as SourceScreenEvent);
       });
     });
 
