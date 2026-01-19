@@ -21,7 +21,7 @@ class NewsRepoImpl implements NewsRepo {
       } else {
         return Left(RemoteFailures(result.message ?? 'Error'));
       }    } catch (e) {
-      return Left(RemoteFailures(e.toString()));
+      return Left(RemoteFailures(e is Exception ? e.toString() : 'Error'));
     }
   }
 }

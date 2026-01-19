@@ -11,10 +11,10 @@ import 'package:news_app/di.dart';
 
 class SourcesSection extends StatelessWidget {
   final String categoryId;
-  final Function onTap;
+   Function onTap;
   final bool hasInternet = false;
 
-  const SourcesSection(
+   SourcesSection(
       {required this.categoryId, required this.onTap, super.key});
 
   @override
@@ -73,7 +73,7 @@ class SourcesSection extends StatelessWidget {
                         actions: [
                           ElevatedButton(
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.of(context, rootNavigator: true).pop(); // يقفل dialog
                                 onTap();
                               },
                               child: const Text("ok"))
@@ -92,9 +92,10 @@ class SourcesSection extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            if (state.getSourcesState == SourceRequestState.loading) {
+            if (state.getSourcesState == SourceRequestState.loading ||
+                state.getSourcesState == SourceRequestState.initial) {
               return const Center(child: CircularProgressIndicator());
-            } else {
+            }else {
               var list = state.sourcesModel?.sources ?? [];
               if (list.isEmpty) {
                 return Center(

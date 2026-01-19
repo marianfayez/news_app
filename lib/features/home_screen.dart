@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       drawer:AppDrawer(onTab: onDrawerTab,),
       body: selectedCategory == null ? CategorySection(onTab:onSelectedCategory,):
-      SourcesSection(categoryId: selectedCategory!, onTap: onDrawerTab,),
+      SourcesSection(categoryId: selectedCategory!, onTap: goHome,),
     );
   }
 
@@ -37,11 +37,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
     });
   }
+  void goHome() {
+    selectedCategory = null;
+    setState(() {});
+  }
   onDrawerTab(){
     Navigator.pop(context);
-    selectedCategory = null;
-    setState(() {
+    goHome();
 
-    });
   }
 }

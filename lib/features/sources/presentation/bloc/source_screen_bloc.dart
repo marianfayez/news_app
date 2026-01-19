@@ -20,7 +20,6 @@ class SourceScreenBloc extends Bloc<SourceScreenEvent, SourceScreenState> {
       // TODO: implement event handler
     });
     on<GetSourcesEvent>((event, emit) async {
-      print('🔥 GetSourcesEvent fired with catId = ${event.catId}');
 
       emit(state.copyWith(getSourcesState: SourceRequestState.loading));
 

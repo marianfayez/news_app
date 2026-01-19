@@ -16,12 +16,16 @@ class SourceRemoteDsImpl implements SourceRemoteDs{
 
     try {
       final response = await apiManager.getData(endPoint: EndPoints.getSources,
-          queryParameters:  {"apiKy": "3512e29a752f4dd6bc7339fa9094bc3c","category":catId});
+          queryParameters:  {"apiKey": "3512e29a752f4dd6bc7339fa9094bc3c","category":catId});
 
       return SourcesModel.fromJson(response.data);
     } on DioException catch (e) {
-      final errorMessage = e.error?.toString() ?? 'Unknown error occurred';
-      throw Exception(errorMessage); // or rethrow with ServerFailure if using Either
+      final message =
+          e.response?.data?['message'] ??
+              e.message ??
+              'Something went wrong';
+
+      throw Exception(message);
     }
 
   }
