@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 import 'package:news_app/features/sources/data/model/sources_model.dart';
 
+part 'news_model.g.dart'; // For generated adapter code
 
 @HiveType(typeId: 2)
 class NewsModel extends HiveObject {

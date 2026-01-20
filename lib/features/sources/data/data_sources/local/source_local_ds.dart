@@ -2,8 +2,8 @@
 
 import 'package:news_app/features/sources/data/model/sources_model.dart';
 
-abstract class SourceRemoteDs{
+abstract class SourceLocalDs{
 
-  Future<SourcesModel>getSources({String? catId,required bool useRemote});
-
+  Future<SourcesModel?> getSources({String? catId});
+  Future<void> saveSources(SourcesModel model, String catId);
 }

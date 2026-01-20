@@ -11,7 +11,7 @@ class ConnectivityUseCase {
   ConnectivityUseCase(this.connectivityService);
   Future<Either<InternetFailure, bool>> call() async {
     try {
-      final result = await hasActualInternet(); // <-- هنا
+      final result = await hasActualInternet();
       return Right(result);
     } catch (e) {
       return Left(InternetFailure(message: e.toString()));

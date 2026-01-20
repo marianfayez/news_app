@@ -12,7 +12,7 @@ class NewsRemoteDsImpl implements NewsRemoteDs {
   NewsRemoteDsImpl(this.apiManager);
 
   @override
-  Future<NewsModel> getNews({String? sourceId}) async {
+  Future<NewsModel> getNews({String? sourceId,required bool useRemote}) async {
     try {
       final response = await apiManager.getData(
           endPoint: EndPoints.getNews,

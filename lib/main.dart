@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:news_app/core/routes/auto_route.dart';
 import 'package:news_app/di.dart';
+import 'package:news_app/features/news/data/models/news_model.dart';
+import 'package:news_app/features/sources/data/model/sources_model.dart';
 import 'package:news_app/features/theme/presentation/bloc/theme_bloc.dart';
 import 'package:news_app/features/theme/presentation/screen/dark_theme.dart';
 import 'package:news_app/features/theme/presentation/screen/light__theme.dart';
@@ -12,6 +15,11 @@ import 'package:news_app/features/theme/presentation/screen/my_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
+  await Hive.initFlutter();
+  Hive.registerAdapter(NewsModelAdapter());
+  Hive.registerAdapter(ArticlesAdapter());
+  Hive.registerAdapter(SourcesAdapter());
+  Hive.registerAdapter(SourcesModelAdapter());
 
   runApp(
     MultiBlocProvider(

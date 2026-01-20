@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+part 'sources_model.g.dart'; // Needed for generated adapter code
 
 
 @HiveType(typeId: 0)
