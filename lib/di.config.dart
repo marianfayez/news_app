@@ -44,6 +44,7 @@ import 'features/sources/data/repositories/source_repo_impl.dart' as _i797;
 import 'features/sources/domain/repositories/source_repo.dart' as _i345;
 import 'features/sources/domain/use_cases/sources_use_case.dart' as _i395;
 import 'features/sources/presentation/bloc/source_screen_bloc.dart' as _i897;
+import 'features/webview_screen/bloc/webview_screen_bloc.dart' as _i621;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -56,6 +57,7 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
+    gh.factory<_i621.ArticleWebViewBloc>(() => _i621.ArticleWebViewBloc());
     gh.lazySingleton<_i237.ApiManager>(() => _i237.ApiManager());
     gh.factory<_i282.SourceLocalDs>(() => _i454.SourceLocalDsImpl());
     gh.lazySingleton<_i557.ConnectivityRemoteDs>(

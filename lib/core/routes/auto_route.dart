@@ -10,6 +10,7 @@ class AppRouter extends RootStackRouter {
 
     AutoRoute(page: SplashRoute.page, initial: true),
     AutoRoute(page: HomeRoute.page),
+    AutoRoute(page: ArticleWebViewRoute.page),
 
   ];
 }

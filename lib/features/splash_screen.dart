@@ -1,11 +1,8 @@
 import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/core/resources/color_manager.dart';
-import 'package:news_app/core/resources/styles_manager.dart';
 import 'package:news_app/core/routes/auto_route.gr.dart';
-import 'package:news_app/features/home_screen.dart';
 import 'package:news_app/gen/assets.gen.dart';
 
 @RoutePage()
@@ -21,9 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     // Start a timer for 3 seconds
     Timer(const Duration(seconds: 4), () {
-
-      context.router.replace( HomeRoute());
-
+      context.router.replace(HomeRoute());
     });
   }
 
