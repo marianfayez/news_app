@@ -64,7 +64,7 @@ class NewsBottomSheet extends StatelessWidget {
                       ))),
                   onPressed: () {
                     Navigator.pop(context);
-                    context.router.replace(ArticleWebViewRoute(
+                    context.router.push(ArticleWebViewRoute(
                       url: article.url!,
                       title: article.title ?? 'News',
                     ));

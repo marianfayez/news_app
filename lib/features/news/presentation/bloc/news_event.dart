@@ -6,7 +6,13 @@ class GetNewsEvent extends NewsScreenEvent {
   GetNewsEvent({this.sourceId});
 }
 
-class ChangeNewsIndexEvent extends NewsScreenEvent {
-  final int index;
-  ChangeNewsIndexEvent(this.index);
+
+class SearchNewsEvent extends NewsScreenEvent {
+  final String query;
+  final String sourceId;
+
+  SearchNewsEvent({
+    required this.query,
+    required this.sourceId,
+  });
 }

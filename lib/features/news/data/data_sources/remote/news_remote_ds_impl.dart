@@ -12,21 +12,20 @@ class NewsRemoteDsImpl implements NewsRemoteDs {
   NewsRemoteDsImpl(this.apiManager);
 
   @override
-  Future<NewsModel> getNews({String? sourceId,required bool useRemote}) async {
+  Future<NewsModel> getNews(
+      {String? sourceId, required bool useRemote, String? query}) async {
     try {
-      final response = await apiManager.getData(
-          endPoint: EndPoints.getNews,
-          queryParameters: {
-            "apiKey": "3512e29a752f4dd6bc7339fa9094bc3c",
-            "sources": sourceId
-          });
+      final response = await apiManager
+          .getData(endPoint: EndPoints.getNews, queryParameters: {
+        "apiKey": "3512e29a752f4dd6bc7339fa9094bc3c",
+        if (sourceId != null) 'sources': sourceId,
+        if (query != null && query.isNotEmpty) 'q': query,
+      });
 
       return NewsModel.fromJson(response.data);
     } on DioException catch (e) {
       final message =
-          e.response?.data?['message'] ??
-              e.message ??
-              'Something went wrong';
+          e.response?.data?['message'] ?? e.message ?? 'Something went wrong';
 
       throw Exception(message);
     }

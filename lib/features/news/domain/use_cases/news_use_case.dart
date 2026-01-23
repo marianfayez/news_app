@@ -12,7 +12,8 @@ class NewsUseCase {
 
   Future<Either<RouteFailures, NewsModel>> call({
     String? sourceId,
-    required bool useRemote,
+    required bool useRemote,  String? query,
+
   }) =>
-      newsRepo.getNews(sourceId: sourceId, useRemote: useRemote);
+      newsRepo.getNews(sourceId: sourceId, useRemote: useRemote,query: query);
 }

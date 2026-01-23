@@ -16,19 +16,21 @@ class NewsRepoImpl implements NewsRepo {
   NewsRepoImpl(this.newsRemoteDs, this.newsLocalDs);
 
   @override
-  Future<Either<RouteFailures, NewsModel>> getNews({String? sourceId, required bool useRemote}) async {
+  Future<Either<RouteFailures, NewsModel>> getNews({
+    String? sourceId,
+    required bool useRemote,
+    String? query,
+  }) async {
     try {
       if (!useRemote) {
         final cachedSources = await newsLocalDs.getNews(sourceId: sourceId);
-
         if (cachedSources == null) {
           return Left(LocalFailures("No cached data"));
         }
-
         return Right(cachedSources);
       }
       var result =
-          await newsRemoteDs.getNews(sourceId: sourceId, useRemote: useRemote);
+          await newsRemoteDs.getNews(sourceId: sourceId, useRemote: useRemote,query: query);
       if (result.status == 'ok') {
         await newsLocalDs.saveNews(result, sourceId ?? '');
         return Right(result);

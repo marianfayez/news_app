@@ -1,7 +1,6 @@
 import 'package:news_app/features/news/data/models/news_model.dart';
 
-abstract class NewsRemoteDs{
-
-  Future<NewsModel>getNews({String? sourceId,required bool useRemote});
-
+abstract class NewsRemoteDs {
+  Future<NewsModel> getNews(
+      {String? sourceId, required bool useRemote, String? query});
 }

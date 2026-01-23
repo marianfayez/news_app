@@ -38,9 +38,37 @@ class NewsScreenBloc extends Bloc<NewsScreenEvent, NewsScreenState> {
         ));
       });
     });
+    on<SearchNewsEvent>((event, emit) async {
+      if (event.query.isEmpty) {
+        add(GetNewsEvent(sourceId: event.sourceId));
+        return;
+      }
+      emit(state.copyWith(getNewsState: NewsRequestState.loading));
+      final internetResult = await connectivityUseCase();
+      bool isConnected = internetResult.fold(
+            (failure) => false,
+            (connected) => connected,
+      );
+      final result = await getNewsUseCase.call(
+        sourceId: event.sourceId,
+        query: event.query, useRemote: isConnected,
+      );
 
-    on<ChangeNewsIndexEvent>((event, emit) {
-      emit(state.copyWith(selectedIndex: event.index));
+      result.fold(
+            (failure) {
+          emit(state.copyWith(
+            getNewsState: NewsRequestState.error,
+            newsFailures: failure,
+          ));
+        },
+            (newsModel) {
+          emit(state.copyWith(
+            getNewsState: NewsRequestState.success,
+            newsModel: newsModel,
+          ));
+        },
+      );
     });
+
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,10 +9,23 @@ import 'package:news_app/features/news/presentation/widgets/news_item.dart';
 import 'package:news_app/features/sources/presentation/bloc/source_screen_bloc.dart';
 import 'package:news_app/features/sources/presentation/bloc/source_screen_event.dart';
 
-class SourcesContent extends StatelessWidget {
+class SourcesContent extends StatefulWidget {
   final Function onTap;
 
   const SourcesContent({super.key, required this.onTap});
+
+  @override
+  State<SourcesContent> createState() => _SourcesContentState();
+}
+
+class _SourcesContentState extends State<SourcesContent> {
+  Timer? _debounce;
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +42,7 @@ class SourcesContent extends StatelessWidget {
                       ElevatedButton(
                           onPressed: () {
                             Navigator.of(context, rootNavigator: true).pop();
-                            onTap();
+                            widget.onTap();
                           },
                           child: const Text("ok"))
                     ],
@@ -61,6 +75,56 @@ class SourcesContent extends StatelessWidget {
 
         return Column(
           children: [
+            Padding(
+              padding: EdgeInsets.all(8.w),
+              child: TextField(
+                cursorColor: Theme.of(context).secondaryHeaderColor,
+                style: Theme.of(context).textTheme.titleMedium,
+                decoration: InputDecoration(
+                  focusColor: Theme.of(context).secondaryHeaderColor,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).secondaryHeaderColor),
+                    borderRadius: BorderRadius.circular(14.r),
+                  ),
+                  hintText: 'Search news...',
+                  hintStyle:
+                      TextStyle(color: Theme.of(context).secondaryHeaderColor),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Theme.of(context).secondaryHeaderColor,
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).secondaryHeaderColor),
+                    borderRadius: BorderRadius.circular(14.r),
+                  ),
+                ),
+                onChanged: (value) {
+                  if (_debounce?.isActive ?? false) {
+                    _debounce!.cancel();
+                  }
+
+                  final sources = context
+                      .read<SourceScreenBloc>()
+                      .state
+                      .sourcesModel
+                      ?.sources;
+                  if (sources == null || sources.isEmpty) return;
+                  final sourceId = sources[
+                          context.read<SourceScreenBloc>().state.selectedIndex]
+                      .id!;
+                  _debounce = Timer(const Duration(milliseconds: 500), () {
+                    context.read<NewsScreenBloc>().add(
+                          SearchNewsEvent(
+                            query: value,
+                            sourceId: sourceId,
+                          ),
+                        );
+                  });
+                },
+              ),
+            ),
             DefaultTabController(
               initialIndex: state.selectedIndex,
               length: sources.length,
