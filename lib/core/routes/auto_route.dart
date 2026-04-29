@@ -3,7 +3,7 @@ import 'package:news_app/core/routes/auto_route.gr.dart';
 
 
 @AutoRouterConfig()
-class AppRouter extends RootStackRouter {
+class AppRouter extends $AppRouter {
 
   @override
   List<AutoRoute> get routes => [

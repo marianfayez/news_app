@@ -15,6 +15,39 @@ import 'package:news_app/features/splash_screen.dart' as _i3;
 import 'package:news_app/features/webview_screen/screens/webview_page.dart'
     as _i1;
 
+abstract class $AppRouter extends _i4.RootStackRouter {
+  $AppRouter({super.navigatorKey});
+
+  @override
+  final Map<String, _i4.PageFactory> pagesMap = {
+    ArticleWebViewRoute.name: (routeData) {
+      final args = routeData.argsAs<ArticleWebViewRouteArgs>();
+      return _i4.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i1.ArticleWebViewPage(
+          key: args.key,
+          url: args.url,
+          title: args.title,
+        ),
+      );
+    },
+    HomeRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
+      return _i4.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i2.HomeScreen(key: args.key),
+      );
+    },
+    SplashRoute.name: (routeData) {
+      return _i4.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i3.SplashScreen(),
+      );
+    },
+  };
+}
+
 /// generated route for
 /// [_i1.ArticleWebViewPage]
 class ArticleWebViewRoute extends _i4.PageRouteInfo<ArticleWebViewRouteArgs> {
@@ -35,17 +68,8 @@ class ArticleWebViewRoute extends _i4.PageRouteInfo<ArticleWebViewRouteArgs> {
 
   static const String name = 'ArticleWebViewRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<ArticleWebViewRouteArgs>();
-      return _i1.ArticleWebViewPage(
-        key: args.key,
-        url: args.url,
-        title: args.title,
-      );
-    },
-  );
+  static const _i4.PageInfo<ArticleWebViewRouteArgs> page =
+      _i4.PageInfo<ArticleWebViewRouteArgs>(name);
 }
 
 class ArticleWebViewRouteArgs {
@@ -81,14 +105,8 @@ class HomeRoute extends _i4.PageRouteInfo<HomeRouteArgs> {
 
   static const String name = 'HomeRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
-    name,
-    builder: (data) {
-      final args =
-          data.argsAs<HomeRouteArgs>(orElse: () => const HomeRouteArgs());
-      return _i2.HomeScreen(key: args.key);
-    },
-  );
+  static const _i4.PageInfo<HomeRouteArgs> page =
+      _i4.PageInfo<HomeRouteArgs>(name);
 }
 
 class HomeRouteArgs {
@@ -113,10 +131,5 @@ class SplashRoute extends _i4.PageRouteInfo<void> {
 
   static const String name = 'SplashRoute';
 
-  static _i4.PageInfo page = _i4.PageInfo(
-    name,
-    builder: (data) {
-      return const _i3.SplashScreen();
-    },
-  );
+  static const _i4.PageInfo<void> page = _i4.PageInfo<void>(name);
 }
